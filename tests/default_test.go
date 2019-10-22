@@ -1,6 +1,7 @@
 package test
 
 import (
+	"anya/models"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -35,5 +36,10 @@ func TestBeego(t *testing.T) {
 	                So(w.Body.Len(), ShouldBeGreaterThan, 0)
 	        })
 	})
+}
+
+func Test_readMarkdownFiles(t *testing.T) {
+	models.ReadMarkdownFiles()
+
 }
 

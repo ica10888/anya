@@ -5,19 +5,12 @@ import (
 	"log"
 	"os"
 	"path"
-
 	"github.com/boltdb/bolt"
 )
 
 func Init() {
 	dir := beego.AppConfig.String("filepath")
-	_, err := os.Stat(dir)
-	if err != nil {
-		err := os.Mkdir(dir, os.ModePerm)
-		if err != nil {
-			panic(err)
-		}
-	}
+	createDirIfNotExist(dir)
 
 	path := path.Join(dir,"bolt.db")
 	createFile,err:=os.Open(path)
