@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"encoding/json"
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/logs"
 )
@@ -15,13 +14,9 @@ func (d *DocController) URLMapping() {
 }
 
 // @router /doc/:tittle [get]
-func (d *DocController) GetDoc() {
-	strTittle := d.Ctx.Input.Param(":tittle")
+func (c *DocController) GetDoc() {
+	strTittle := c.Ctx.Input.Param(":tittle")
 	logs.Info(">>>> Tittle: %s <<<<",strTittle)
-	d.Data["Tittle"] = strTittle
-	bytes,err := json.Marshal(strTittle)
-	if err != nil {
-		panic("json Marshal failed")
-	}
-	d.Ctx.ResponseWriter.Write(bytes)
+	c.Data["Tittle"] = strTittle
+	c.TplName = "page.tpl"
 }
