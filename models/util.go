@@ -18,20 +18,20 @@ func createDirIfNotExist(dir string)  {
 }
 
 
-func GetAllFile(pathname string) (files map[string][]byte ,err error) {
+func GetAllFile(pathname string,predicate func (string) bool) (files map[string][]byte ,err error) {
 	if files ==nil {
 		files = make(map[string][]byte)
 	}
 	rd, err := ioutil.ReadDir(pathname)
 	for _, fi := range rd {
-		if ! fi.IsDir() {
+		if ! fi.IsDir() && predicate(fi.Name()) {
 			file, err := ioutil.ReadFile(path.Join(pathname,fi.Name()))
 			if err != nil {
 				panic(err)
 			}
 			files[fi.Name()] = []byte(file)
 		}else {
-			files,err =  GetAllFile(pathname)
+			files,err =  GetAllFile(pathname,predicate)
 			if err != nil {
 				panic(err)
 			}
