@@ -8,6 +8,7 @@ import (
 
 func main() {
 	models.Init()
+	models.ReadMarkdownFiles()
 	beego.Run()
 }
 

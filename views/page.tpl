@@ -9,6 +9,9 @@
     <h2>>>>> Tittle: {{.Tittle}} <<<<</h2>
     <p>some description</p>
    </div>
+   <div>
+   {{ .Content}}
+   </div>
   <audio controls="controls" style="display: none;"></audio>
   </body>
 </html>

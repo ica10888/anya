@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"anya/models"
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/logs"
 )
@@ -18,5 +19,6 @@ func (c *DocController) GetDoc() {
 	strTittle := c.Ctx.Input.Param(":tittle")
 	logs.Info(">>>> Tittle: %s <<<<",strTittle)
 	c.Data["Tittle"] = strTittle
+	c.Data["Content"] = models.Content
 	c.TplName = "page.tpl"
 }
