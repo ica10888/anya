@@ -1,7 +1,8 @@
 
 (function() {
+    hljs.initHighlightingOnLoad();
     document.addEventListener('DOMContentLoaded', (event) => {
-        document.querySelectorAll('pre code').forEach((block) => {
+        document.querySelectorAll('.highlight pre').forEach((block) => {
             hljs.highlightBlock(block);
         });
     });

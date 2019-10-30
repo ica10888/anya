@@ -5,10 +5,9 @@
 
   <link rel="stylesheet" type="text/css" href="/static/css/github-markdown.css">
 
-  <link rel="stylesheet" type="text/css" href="/static/css/default.css">
-  <script src="/static/js/highlight.js"></script>
+  <link href="https://apps.bdimg.com/libs/highlight.js/9.1.0/styles/solarized_light.min.css" rel="stylesheet">
+  <script src="http://apps.bdimg.com/libs/highlight.js/9.1.0/highlight.min.js"></script>
   <script src="/static/js/page.js"></script>
-  <script>hljs.initHighlightingOnLoad();</script>
  </head>
  <body>
   <title>{{.Tittle}}</title>
