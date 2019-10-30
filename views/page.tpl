@@ -2,7 +2,13 @@
  <head>
   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=0.5" />
+
   <link rel="stylesheet" type="text/css" href="/static/css/github-markdown.css">
+
+  <link rel="stylesheet" type="text/css" href="/static/css/default.css">
+  <script src="/static/js/highlight.js"></script>
+  <script src="/static/js/page.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
  </head>
  <body>
   <title>{{.Tittle}}</title>
