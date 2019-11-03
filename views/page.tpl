@@ -5,8 +5,11 @@
 
   <link rel="stylesheet" type="text/css" href="/static/css/github-markdown.css">
 
+  <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+
   <link href="https://apps.bdimg.com/libs/highlight.js/9.1.0/styles/solarized_light.min.css" rel="stylesheet">
   <script src="http://apps.bdimg.com/libs/highlight.js/9.1.0/highlight.min.js"></script>
+
   <script src="/static/js/page.js"></script>
  </head>
  <body>
