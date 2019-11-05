@@ -4,6 +4,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=0.5" />
 
   <link rel="stylesheet" type="text/css" href="/static/css/github-markdown.css">
+  <link rel="stylesheet" type="text/css" href="/static/css/main.css">
 
   <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
 
@@ -13,6 +14,21 @@
   <script src="/static/js/page.js"></script>
  </head>
  <body>
+
+    <header id="top">
+        <nav>
+            <ul>
+                <li><a href="/pages/about.html">
+                        <img src="/static/assets/svg/mention.svg"><span>About</span></a></li>
+                <li><a href="/">
+                        <img src="/static/assets/svg/home.svg"><span>Home</span></a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div style="border-bottom: 1px solid #000"></div>
+
+
   <title>{{.Tittle}}</title>
   <div class="inner">
     <h2>>>>> Tittle: {{.Tittle}} <<<<</h2>
@@ -20,7 +36,7 @@
    </div>
    <div>
    <article class="markdown-body">
-   {{ .Content | str2html}}
+   {{ .Content | str2html }}
    </article>
    </div>
   <audio controls="controls" style="display: none;"></audio>
