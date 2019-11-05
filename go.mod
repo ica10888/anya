@@ -4,6 +4,7 @@ go 1.12
 
 require (
 	github.com/astaxie/beego v1.12.0
+	github.com/axgle/mahonia v0.0.0-20180208002826-3358181d7394
 	github.com/boltdb/bolt v1.3.1
 	github.com/kr/pretty v0.1.0 // indirect
 	github.com/microcosm-cc/bluemonday v1.0.2 // indirect
@@ -26,5 +27,5 @@ require (
 	golang.org/x/text v0.3.2 // indirect
 	gopkg.in/check.v1 v1.0.0-20190902080502-41f04d3bba15 // indirect
 	gopkg.in/russross/blackfriday.v2 v2.0.0
-	gopkg.in/yaml.v2 v2.2.4 // indirect
+	gopkg.in/yaml.v2 v2.2.4
 )

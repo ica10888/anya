@@ -23,5 +23,6 @@ func init() {
 	/*页面文件路径*/
 	//beego.BConfig.WebConfig.ViewsPath="views/user"
 	/*注解路由*/
+	beego.Include(&controllers.DocListController{})
 	beego.Include(&controllers.DocController{})
 }

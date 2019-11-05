@@ -10,15 +10,15 @@ type DocController struct {
 	beego.Controller
 }
 
-func (d *DocController) URLMapping() {
-	d.Mapping("GET",d.GetDoc)
+func (this *DocController) URLMapping() {
+	this.Mapping("GET",this.GetDoc)
 }
 
-// @router /doc/:tittle [get]
-func (c *DocController) GetDoc() {
-	strTittle := c.Ctx.Input.Param(":tittle")
-	logs.Info(">>>> Tittle: %s <<<<",strTittle)
-	c.Data["Tittle"] = strTittle
-	c.Data["Content"] = models.Content
-	c.TplName = "page.tpl"
+// @router /doc/:title [get]
+func (this *DocController) GetDoc() {
+	strTitle := this.Ctx.Input.Param(":title")
+	logs.Info("%s",strTitle)
+	this.Data["Title"] = strTitle
+	this.Data["Content"] = models.Markdowns[strTitle].DocContent
+	this.TplName = "page.tpl"
 }

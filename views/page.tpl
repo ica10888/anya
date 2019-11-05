@@ -29,9 +29,9 @@
     <div style="border-bottom: 1px solid #000"></div>
 
 
-  <title>{{.Tittle}}</title>
+  <title>{{ .Title }}</title>
   <div class="inner">
-    <h2>>>>> Tittle: {{.Tittle}} <<<<</h2>
+    <h2>>>>> Title: {{ .Title }} <<<<</h2>
     <p>some description</p>
    </div>
    <div>
