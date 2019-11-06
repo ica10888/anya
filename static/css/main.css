@@ -466,8 +466,22 @@ code::-webkit-scrollbar-thumb {
     align-items: stretch;
     border-radius: 2px;
     width: 50%;
-    margin: 0 auto
+    margin: 0 auto;
+    min-width: 800px
 }
+
+@media screen and (min-width: 480px) and (min-width:767px){
+    .markdown-body{
+        min-width: 480px
+    }
+}
+
+@media screen and (min-width: 767px) and (min-width:959px){
+    .markdown-body{
+        min-width: 767px
+    }
+}
+
 
 
 .highlight{

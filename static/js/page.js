@@ -15,19 +15,28 @@
 })()
 
 
+$.ajax({url:"/static/includes/head.html",success:function(result){
+            $(result).prependTo($("body"))
+}});
+
+$.ajax({url:"/static/includes/footer.html",success:function(result){
+        $("#footer-mark").after($(result))
+    }});
+
 $.ajax({url:"docList",success:function(result){
 
-        let titles = Object.keys(result)
+        let links = Object.keys(result)
+        let titles = Object.values(result)
         let thisTitle = decodeURI(document.URL.split("/").pop())
-        let index = titles.lastIndexOf(thisTitle)
+        let index = links.lastIndexOf(thisTitle)
         if (index - 1 >= 0 ){
             $("<span class=\"posts-list-meta\">上一篇： </span>" +
-                "<a class=\"posts-list-name\" href=\""+ titles[index - 1]+"\"> "+ titles[index - 1]+"</a>"
+                "<a class=\"posts-list-name\" href=\""+ links[index - 1]+"\"> "+ titles[index - 1].title+"</a>"
             ).prependTo($("#doc-link"))
         }
-        if (index + 1 < titles.length ){
+        if (index + 1 < links.length ){
             $("<span class=\"posts-list-meta\">下一篇： </span>" +
-                "<a class=\"posts-list-name\" href=\""+ titles[index + 1]+"\"> "+ titles[index + 1]+"</a>"
+                "<a class=\"posts-list-name\" href=\""+ links[index + 1]+"\"> "+ titles[index + 1].title+"</a>"
             ).prependTo($("#doc-link"))
         }
 }});
