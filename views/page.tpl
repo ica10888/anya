@@ -39,6 +39,8 @@
    {{ .Content | str2html }}
    </article>
    </div>
+  <div class="inner" id="doc-link">
+  </div>
   <audio controls="controls" style="display: none;"></audio>
   </body>
 </html>

@@ -13,3 +13,21 @@
         });
     });
 })()
+
+
+$.ajax({url:"docList",success:function(result){
+
+        let titles = Object.keys(result)
+        let thisTitle = decodeURI(document.URL.split("/").pop())
+        let index = titles.lastIndexOf(thisTitle)
+        if (index - 1 >= 0 ){
+            $("<span class=\"posts-list-meta\">上一篇： </span>" +
+                "<a class=\"posts-list-name\" href=\""+ titles[index - 1]+"\"> "+ titles[index - 1]+"</a>"
+            ).prependTo($("#doc-link"))
+        }
+        if (index + 1 < titles.length ){
+            $("<span class=\"posts-list-meta\">下一篇： </span>" +
+                "<a class=\"posts-list-name\" href=\""+ titles[index + 1]+"\"> "+ titles[index + 1]+"</a>"
+            ).prependTo($("#doc-link"))
+        }
+}});
