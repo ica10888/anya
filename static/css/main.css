@@ -535,3 +535,57 @@ code::-webkit-scrollbar-thumb {
     margin:0 auto;
 
 }
+
+.post-header {
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.5;
+    font-size: 27px;
+    font-weight: 400;
+    font-family: Athelas, STHeiti, Microsoft Yahei, serif;
+    background-color: transparent;
+    color: #34495e;
+    text-decoration: none;
+    vertical-align: middle;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    box-shadow: 0 0 1px transparent;
+    position: relative;
+    overflow: hidden;
+    margin: 0 auto
+}
+
+.post-title {
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.5;
+    color: #34495e;
+    margin: 0;
+    font-size: 27px;
+    font-weight: 400;
+    font-family: Athelas,STHeiti,Microsoft Yahei,serif;
+}
+
+.doc-list-class {
+
+    font-size: 16px;
+    font-family: Source Sans Pro,Helvetica Neue,Arial,sans-serif;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.5;
+    color: #34495e;
+    display: block;
+    padding: 1.5em 0;
+    width: 50%;
+    margin: 0 auto
+}
+
+.posts {
+    font-size: 16px;
+    font-family: Source Sans Pro,Helvetica Neue,Arial,sans-serif;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.5;
+    color: #34495e;
+    display: block;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #e6e6e6;
+}
