@@ -18,14 +18,14 @@
 <body>
 
 <title>{{ .Title }}</title>
-<div class="inner">
- <h2>>>>> Title: {{ .Title }} <<<<</h2>
- <p>some description</p>
+<div style="height: 70px" class="inner">
 </div>
 <div>
  <article class="markdown-body">
   {{ .Content | str2html }}
  </article>
+</div>
+<div style="height: 70px" class="inner">
 </div>
 <div class="inner" id="doc-link">
 </div>

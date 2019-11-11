@@ -30,13 +30,19 @@ $.ajax({url:"docList",success:function(result){
         let thisTitle = decodeURI(document.URL.split("/").pop())
         let index = links.lastIndexOf(thisTitle)
         if (index - 1 >= 0 ){
-            $("<span class=\"posts-list-meta\">上一篇： </span>" +
-                "<a class=\"posts-list-name\" href=\""+ links[index - 1]+"\"> "+ titles[index - 1].title+"</a>"
+            $("<div>" +
+                "<span class=\"prev-text\">上一篇： </span>" +
+                "<a class=\"posts-list-name\" href=\""+ links[index - 1]+"\"> "+ titles[index - 1].title+"</a>" +
+                "</div>"
             ).prependTo($("#doc-link"))
         }
-        if (index + 1 < links.length ){
-            $("<span class=\"posts-list-meta\">下一篇： </span>" +
-                "<a class=\"posts-list-name\" href=\""+ links[index + 1]+"\"> "+ titles[index + 1].title+"</a>"
+        if (index + 1 < links.length ) {
+            $("<div>" +
+                "<span class=\"prev-text\">下一篇： </span>" +
+                "<a class=\"posts-list-name\" href=\"" + links[index + 1] + "\"> " + titles[index + 1].title + "</a>" +
+                "</div>"
             ).prependTo($("#doc-link"))
         }
 }});
+
+
