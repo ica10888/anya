@@ -2,22 +2,22 @@ package models
 
 import (
 	"github.com/astaxie/beego"
+	"github.com/boltdb/bolt"
 	"log"
 	"os"
 	"path"
-	"github.com/boltdb/bolt"
 )
 
 func Init() {
 	dir := beego.AppConfig.String("filepath")
 	createDirIfNotExist(dir)
 
-	path := path.Join(dir,"bolt.db")
-	createFile,err:=os.Open(path)
-	defer func(){
+	path := path.Join(dir, "bolt.db")
+	createFile, err := os.Open(path)
+	defer func() {
 		createFile.Close()
 	}()
-	if err != nil && os.IsNotExist(err){
+	if err != nil && os.IsNotExist(err) {
 		_, err = os.Create(path)
 		if err != nil {
 			panic(err)
