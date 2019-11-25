@@ -1,7 +1,6 @@
 package models
 
 import (
-	"bytes"
 	"github.com/astaxie/beego"
 	"github.com/shurcooL/github_flavored_markdown"
 	"gopkg.in/yaml.v2"
@@ -9,7 +8,10 @@ import (
 	"strings"
 )
 
-var Markdowns map[string]DocPage
+var (
+	Markdowns   = make(map[string]DocPage)
+	TitleSha256 = make(map[string]string)
+)
 
 type DocDescription struct {
 	Layout   string   `yaml:"layout"  json:"layout"`
@@ -42,23 +44,23 @@ func ReadMarkdownFiles() {
 	}
 
 	for k, v := range files {
-		sha256 := GetSHA256HashCode(v)
-		println(k)
-		println(sha256)
-	}
-	MarkdowntoHtml()
-
-	Markdowns = make(map[string]DocPage)
-	for k, v := range files {
-		docMarkdown := strings.SplitN(v, "---", 3)
-		var dd DocDescription
-		err := yaml.Unmarshal([]byte(docMarkdown[1]), &dd)
-		if err != nil {
-			panic(err)
+		if TitleSha256[k] != "" && GetSHA256HashCode(v) == TitleSha256[k] {
+			//do nothing
+		} else {
+			docMarkdown := strings.SplitN(v, "---", 3)
+			var dd DocDescription
+			err := yaml.Unmarshal([]byte(docMarkdown[1]), &dd)
+			if err != nil {
+				panic(err)
+			}
+			Markdowns[strings.Replace(k, ".md", "", 1)] = DocPage{dd,
+				string(toMarkdown([]byte(docMarkdown[2])))}
 		}
-		Markdowns[strings.Replace(k, ".md", "", 1)] = DocPage{dd,
-			string(toMarkdown([]byte(docMarkdown[2])))}
 
+	}
+
+	for k, v := range files {
+		TitleSha256[k] = GetSHA256HashCode(v)
 	}
 
 }
@@ -66,10 +68,4 @@ func ReadMarkdownFiles() {
 func toMarkdown(content []byte) (output []byte) {
 	output = github_flavored_markdown.Markdown(content)
 	return
-}
-
-func MarkdowntoHtml() {
-	var buf bytes.Buffer
-	beego.ExecuteViewPathTemplate(&buf, "page.tpl", "", "")
-
 }

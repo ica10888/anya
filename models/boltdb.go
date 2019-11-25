@@ -1,12 +1,15 @@
 package models
 
 import (
+	"fmt"
 	"github.com/astaxie/beego"
 	"github.com/boltdb/bolt"
 	"log"
 	"os"
 	"path"
 )
+
+var DataBase *bolt.DB
 
 func Init() {
 	dir := beego.AppConfig.String("filepath")
@@ -24,9 +27,19 @@ func Init() {
 		}
 	}
 
-	db, err := bolt.Open(path, 0600, nil)
+	DataBase, err = bolt.Open(path, 0600, nil)
 	if err != nil {
 		log.Fatal(err)
 	}
-	defer db.Close()
+	//创建 Bucket
+	DataBase.Update(func(tx *bolt.Tx) error {
+		_, err := tx.CreateBucketIfNotExists([]byte("TitleBucket"))
+		if err != nil {
+			return fmt.Errorf("create bucket: %v", err)
+		}
+		return nil
+	})
+	if err != nil {
+		log.Fatal(err)
+	}
 }

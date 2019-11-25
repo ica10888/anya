@@ -7,8 +7,8 @@ import (
 )
 
 func main() {
+	defer models.DataBase.Close()
 	models.Init()
-	models.ReadMarkdownFiles()
+	go models.HandleSchedule()
 	beego.Run()
 }
-
