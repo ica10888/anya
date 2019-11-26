@@ -11,6 +11,7 @@ import (
 var (
 	Markdowns   = make(map[string]DocPage)
 	TitleSha256 = make(map[string]string)
+	Files       = make(map[string]string)
 )
 
 type DocDescription struct {
@@ -31,8 +32,8 @@ var Content string
 
 func ReadMarkdownFiles() {
 	dir := beego.AppConfig.String("inputdir")
-	createDirIfNotExist(dir)
-	files, err := GetAllFile(dir, func(s string) bool {
+
+	Files, err := GetAllFile(dir, func(s string) bool {
 		regex, err := regexp.Match(`.*.md`, []byte(s))
 		if err != nil {
 			panic(err)
@@ -43,7 +44,7 @@ func ReadMarkdownFiles() {
 		panic(err)
 	}
 
-	for k, v := range files {
+	for k, v := range Files {
 		if TitleSha256[k] != "" && GetSHA256HashCode(v) == TitleSha256[k] {
 			//do nothing
 		} else {
@@ -59,7 +60,7 @@ func ReadMarkdownFiles() {
 
 	}
 
-	for k, v := range files {
+	for k, v := range Files {
 		TitleSha256[k] = GetSHA256HashCode(v)
 	}
 

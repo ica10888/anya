@@ -2,9 +2,9 @@ package models
 
 import (
 	"bytes"
-	"fmt"
 	"github.com/astaxie/beego"
 	"github.com/boltdb/bolt"
+	"log"
 	"time"
 )
 
@@ -27,7 +27,7 @@ func copyToBoltdb() {
 		ReadMarkdownFiles()
 		//键值对比较
 		for k, v := range TitleSha256 {
-			DataBase.View(func(tx *bolt.Tx) error {
+			err := DataBase.View(func(tx *bolt.Tx) error {
 				b := tx.Bucket([]byte("TitleBucket"))
 				vInBoltDb := b.Get([]byte(k))
 				if vInBoltDb == nil {
@@ -40,9 +40,12 @@ func copyToBoltdb() {
 
 				return nil
 			})
+			if err != nil {
+				log.Println(err)
+			}
 
 			//遍历
-			DataBase.View(func(tx *bolt.Tx) error {
+			err = DataBase.View(func(tx *bolt.Tx) error {
 				// Assume bucket exists and has keys
 				b := tx.Bucket([]byte("TitleBucket"))
 
@@ -57,6 +60,9 @@ func copyToBoltdb() {
 
 				return nil
 			})
+			if err != nil {
+				log.Println(err)
+			}
 
 		}
 
@@ -66,16 +72,53 @@ func copyToBoltdb() {
 }
 
 func copyToHtml() {
+	outdir := beego.AppConfig.String("outputdir")
+
 	for {
 		select {
 		case msg := <-titleForCreate:
-			fmt.Println(msg)
-
+			err := WriteFile(outdir, msg, MarkdowntoHtml(msg, Files[msg]))
+			if err != nil {
+				log.Println(err)
+			}
+			err = DataBase.Update(func(tx *bolt.Tx) error {
+				b := tx.Bucket([]byte("TitleBucket"))
+				err := b.Put([]byte(msg), []byte(TitleSha256[msg]))
+				return err
+			})
+			if err != nil {
+				log.Println(err)
+			}
 		case msg := <-titleForUpdate:
-			fmt.Println(msg)
+			err := WriteFile(outdir, msg, MarkdowntoHtml(msg, Files[msg]))
+			if err != nil {
+				log.Println(err)
+			}
+			err = DataBase.Update(func(tx *bolt.Tx) error {
+				b := tx.Bucket([]byte("TitleBucket"))
+				err := b.Put([]byte(msg), []byte(TitleSha256[msg]))
+				return err
+			})
+			if err != nil {
+				log.Println(err)
+			}
 
 		case msg := <-titleForDelete:
-			fmt.Println(msg)
+			err := DeleteFile(outdir, msg)
+			if err != nil {
+				log.Println(err)
+			}
+			err = DataBase.Update(func(tx *bolt.Tx) error {
+				b := tx.Bucket([]byte("TitleBucket"))
+				err := b.Delete([]byte(msg))
+				if err != nil {
+					return err
+				}
+				return nil
+			})
+			if err != nil {
+				log.Println(err)
+			}
 
 		}
 
@@ -97,7 +140,10 @@ func MarkdowntoHtml(title string, content string) (strHtml string) {
 	data := make(map[string]string)
 	data["Title"] = title
 	data["Content"] = content
-	beego.ExecuteViewPathTemplate(&buf, "page.tpl", beego.BConfig.WebConfig.ViewsPath, data)
+	err := beego.ExecuteViewPathTemplate(&buf, "page.tpl", beego.BConfig.WebConfig.ViewsPath, data)
+	if err != nil {
+		return
+	}
 	strHtml = string(buf.Bytes())
 	return
 }

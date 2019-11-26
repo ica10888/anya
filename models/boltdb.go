@@ -12,8 +12,13 @@ import (
 var DataBase *bolt.DB
 
 func Init() {
+	//创建文件夹
 	dir := beego.AppConfig.String("filepath")
 	createDirIfNotExist(dir)
+	inputdir := beego.AppConfig.String("inputdir")
+	createDirIfNotExist(inputdir)
+	outdir := beego.AppConfig.String("outputdir")
+	createDirIfNotExist(outdir)
 
 	path := path.Join(dir, "bolt.db")
 	createFile, err := os.Open(path)
@@ -32,7 +37,7 @@ func Init() {
 		log.Fatal(err)
 	}
 	//创建 Bucket
-	DataBase.Update(func(tx *bolt.Tx) error {
+	err = DataBase.Update(func(tx *bolt.Tx) error {
 		_, err := tx.CreateBucketIfNotExists([]byte("TitleBucket"))
 		if err != nil {
 			return fmt.Errorf("create bucket: %v", err)

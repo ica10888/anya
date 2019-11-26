@@ -41,6 +41,24 @@ func GetAllFile(pathname string, predicate func(string) bool) (files map[string]
 	return
 }
 
+func WriteFile(pathname string, fileName string, content string) (err error) {
+	paths := path.Join(pathname, fileName)
+	f, err := os.Create(paths)
+	defer f.Close()
+	if err != nil {
+		return
+	} else {
+		_, err = f.Write([]byte(content))
+	}
+	return
+}
+
+func DeleteFile(pathname string, fileName string) (err error) {
+	paths := path.Join(pathname, fileName)
+	err = os.Remove(paths)
+	return
+}
+
 func GetSHA256HashCode(message string) (hashCode string) {
 	hash := sha256.New()
 	hash.Write([]byte(message))
