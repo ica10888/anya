@@ -6,6 +6,7 @@ import (
 	"github.com/astaxie/beego"
 	"github.com/boltdb/bolt"
 	"log"
+	"strings"
 	"time"
 )
 
@@ -99,7 +100,8 @@ func copyToHtml() {
 	for {
 		select {
 		case msg := <-titleForCreate:
-			err := WriteFile(outdir, msg, MarkdowntoHtml(msg, Files[msg]))
+			err := WriteFile(outdir, strings.Replace(msg, ".md", "", 1), MarkdowntoHtml(msg, Files[msg]))
+			log.Printf("Write File : %s", strings.Replace(msg, ".md", "", 1))
 			if err != nil {
 				log.Println(err)
 			}
@@ -112,7 +114,8 @@ func copyToHtml() {
 				log.Println(err)
 			}
 		case msg := <-titleForUpdate:
-			err := WriteFile(outdir, msg, MarkdowntoHtml(msg, Files[msg]))
+			err := WriteFile(outdir, strings.Replace(msg, ".md", "", 1), MarkdowntoHtml(msg, Files[msg]))
+			log.Printf("Update File : %s", strings.Replace(msg, ".md", "", 1))
 			if err != nil {
 				log.Println(err)
 			}
@@ -126,7 +129,8 @@ func copyToHtml() {
 			}
 
 		case msg := <-titleForDelete:
-			err := DeleteFile(outdir, msg)
+			err := DeleteFile(outdir, strings.Replace(msg, ".md", "", 1))
+			log.Printf("Delete File : %s", strings.Replace(msg, ".md", "", 1))
 			if err != nil {
 				log.Println(err)
 			}
