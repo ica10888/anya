@@ -2,6 +2,7 @@ package models
 
 import (
 	"bytes"
+	"encoding/json"
 	"github.com/astaxie/beego"
 	"github.com/boltdb/bolt"
 	"log"
@@ -66,6 +67,28 @@ func copyToBoltdb() {
 
 		}
 
+		descMaps, err := json.Marshal(DescMaps)
+		if err != nil {
+			log.Println(err)
+		}
+		err = DataBase.View(func(tx *bolt.Tx) error {
+			b := tx.Bucket([]byte("TitleBucket"))
+			vInBoltDb := b.Get([]byte("doclist"))
+			if vInBoltDb == nil || string(vInBoltDb) != string(descMaps) {
+				err := WriteFile(beego.AppConfig.String("outputdir"), "doclist", string(descMaps))
+				if err != nil {
+					log.Println(err)
+				}
+				err = DataBase.Update(func(tx *bolt.Tx) error {
+					b := tx.Bucket([]byte("TitleBucket"))
+					err := b.Put([]byte("doclist"), descMaps)
+					return err
+				})
+			}
+
+			return nil
+		})
+
 		time.Sleep(10 * time.Second)
 	}
 
@@ -73,7 +96,6 @@ func copyToBoltdb() {
 
 func copyToHtml() {
 	outdir := beego.AppConfig.String("outputdir")
-
 	for {
 		select {
 		case msg := <-titleForCreate:

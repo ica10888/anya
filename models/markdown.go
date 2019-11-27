@@ -12,6 +12,7 @@ var (
 	Markdowns   = make(map[string]DocPage)
 	TitleSha256 = make(map[string]string)
 	Files       = make(map[string]string)
+	DescMaps    = make(map[string]DocDescription)
 )
 
 type DocDescription struct {
@@ -62,6 +63,10 @@ func ReadMarkdownFiles() {
 
 	for k, v := range Files {
 		TitleSha256[k] = GetSHA256HashCode(v)
+	}
+
+	for k, v := range Markdowns {
+		DescMaps[k] = v.DocDesc
 	}
 
 }
