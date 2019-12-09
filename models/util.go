@@ -11,7 +11,7 @@ import (
 func createDirIfNotExist(dir string) {
 	_, err := os.Stat(dir)
 	if err != nil {
-		err := os.Mkdir(dir, os.ModePerm)
+		err := os.MkdirAll(dir, os.ModePerm)
 		if err != nil {
 			panic(err)
 		}
